@@ -3,8 +3,6 @@ Looking for contributors!
 
 A repo used to take a given list of image names from a source registry and then pulls, retags and pushes them to some other registry.
 
-
-
 ## General Instructions
 For the most part, pushing images to different container registries will be similar to each other in that they follow these high level steps :
 
@@ -77,3 +75,22 @@ The above describes the largest difference between ECR and other registries, in 
 ```
 
 Provided a repository exists in ECR that matches the name of your image the pushing of the image remains similar to pushing to Dockerhub or another registry.
+
+
+
+## Running the script
+
+Both scripts are using args to determine where the images will be pushed to and what will be used for the task (Docker vs podman vs your-friendly-neighbourhood-container-engine)
+
+The first arg passed to the scripts is the destination registry and should be only a fqdn of the registry, a full URL is no good.
+
+
+The second arg is what engine will be used to pull, tag and push images. If nothing is provided the script has logic to detect if either podman or docker is available and uses one of those. 
+
+```bash
+sh mirror-images myregistry docker
+```
+
+## Note
+This guide was prepared while I was learning and building a script to mirror all the images in my companies production image repo to a customers private repo. This meant that those who want to only depend on their image registries in the SOC can just grab everything they need from us the first time and then off they go. 
+I had a lot of fun building it. If you want to see the up to date prod version we now share with customers [head here](https://github.com/ibmresilient/resilient-community-apps/tree/master/.scripts/mirror-containers)
